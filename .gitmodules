@@ -1,0 +1,3 @@
+[submodule "OCB-AES"]
+	path = ocb-new
+	url = https://github.com/DesWurstes/OCB-AES.git
