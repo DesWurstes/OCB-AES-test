@@ -5,4 +5,4 @@ implementation.
 
 ### Known issues
 
-This tool sometimes segfaults when `(associated_data_length %= 16) != 0`. A test failure never happens.
+This tool sometimes segfaults when `0 < associated_data_length < 16`. A test failure never happens.

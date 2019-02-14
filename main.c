@@ -14,8 +14,10 @@ const unsigned char de[3] = "DE";
 int main(void) {
   const unsigned char* errdesc;
   unsigned int itr = 0, diff, alen, mlen;
-  unsigned char key[32], nonce[12], associated_data[64], message[64],
-    out1[80], out2[80];
+  long unsigned int _key[4], _nonce[2], _associated_data[8], _message[8],
+    _out1[10], _out2[10];
+  unsigned char * key = (unsigned char *) _key, * nonce = (unsigned char *) _nonce, * associated_data = (unsigned char *) _associated_data,
+  * message = (unsigned char *) _message, * out1 = (unsigned char *) _out1, * out2 = (unsigned char *) _out2;
   ae_ctx ctx;
   if (!rdrand32(&diff)) {
     puts("RNG failed.");
@@ -28,14 +30,14 @@ test:
   alen %= 64;
   mlen %= 64;
   for (int i = 0; i < 32; i += 8)
-    rdrand64((long unsigned int *) &key[i]);
+    rdrand64((long unsigned int *) &_key[i]);
   for (int i = 0; i < 64; i += 8)
-    rdrand64((long unsigned int *) &associated_data[i]);
+    rdrand64((long unsigned int *) &_associated_data[i]);
   for (int i = 0; i < 64; i += 8)
-    rdrand64((long unsigned int *) &message[i]);
+    rdrand64((long unsigned int *) &_message[i]);
 
-  rdrand64((long unsigned int *) &nonce[0]);
-  rdrand32((unsigned int *) &nonce[8]);
+  rdrand64((long unsigned int *) &_nonce[0]);
+  rdrand32((unsigned int *) &_nonce[8]);
 
   ocb_encrypt(key, nonce, 12,
     message, mlen, associated_data,
